@@ -24,3 +24,4 @@ Route::get('/test', function () {
 });
 Route::get('/create-user', [UserController::class , 'createUserWithProfile']);
 Route::get('/many-many', [UserController::class , 'ManyToMany']);
+Route::get('/many-many-index', [UserController::class , 'ManyToManyIndex']);

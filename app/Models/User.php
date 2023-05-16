@@ -28,7 +28,7 @@ class User extends Authenticatable
     }
     public function roles()
     {
-        return $this->belongsToMany(Roule::class, 'role_user');
+        return $this->belongsToMany(Role::class, 'role_user');
     }
     protected $fillable = [
         'name',

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Profile;
-use App\Models\Roule;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -25,18 +25,20 @@ class UserController extends Controller
     }
 
     public function ManyToMany(){
+        // create user 
         $user = new User();
-        $user->name = 'John Doe';
-        $user->email = 'johndoe3@example.com';
+        $user->name = 'salah arbani';
+        $user->email = 'salah@example.com';
         $user->password = bcrypt('password');
         $user->save();
-    
-        $role1 = new Roule();
-        $role1->name = 'Admin';
+
+        // add roles to user
+        $role1 = new Role();
+        $role1->name = 'Guest';
         $role1->save();
     
-        $role2 = new Roule();
-        $role2->name = 'Editor';
+        $role2 = new Role();
+        $role2->name = 'Dev';
         $role2->save();
     
         $user->roles()->attach([$role1->id, $role2->id]);
@@ -44,10 +46,10 @@ class UserController extends Controller
     }
 
     public function ManyToManyIndex(){
-        $user = User::with('roles')->find(1);
+        $user = User::with('roles')->find(24);
         $roles = $user->roles;
 
-        return view('test', compact('user', 'roles'));
+        return view('roles.many', compact('user', 'roles'));
         
     }
 }
