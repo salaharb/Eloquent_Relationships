@@ -13,7 +13,7 @@ class UserController extends Controller
     {
         $user = new User();
         $user->name = 'John Doe';
-        $user->email = 'johndoe1@example.com';
+        $user->email = 'ilham@example.com';
         $user->password = bcrypt('password'); // Set a password value here
         $user->save();
 
