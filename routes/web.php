@@ -134,7 +134,7 @@ Route::get('/', function () {
 
 
     //------------------------------------------------------------
-    // Morph one to many 
+    // Morph many to many 
     //-------------------------------------------------------------
     $post = Post::find(1);
     $tag = Tag::create(['name' => 'Laravel']);
@@ -143,7 +143,7 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function () {
-    $video = Post::find(1);
+    $video = Post::find(12);
     $comments = $video->comments;
     return $comments;
     //To retrieve the tags associated with a post:
