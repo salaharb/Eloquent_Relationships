@@ -146,6 +146,12 @@ Route::get('/test', function () {
     $video = Post::find(1);
     $comments = $video->comments;
     return $comments;
+    //To retrieve the tags associated with a post:
+    // $post = Post::find(1);
+    // $tags = $post->tags;
+    //To access the posts associated with a tag:
+    // $tag = Tag::find(1);
+    // $posts = $tag->posts;
 });
 
 Route::get("/morph", function () {
