@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Models\Article;
 use App\Models\Post;
+use App\Models\Product;
 use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -19,20 +21,83 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    
+    // ONE_TO_ONE
+    //----------------------------------------------------
     // $profile = User::find(1)->profile;
     // $user = Profile::find(1)->user;
     // echo $user; // find user from Profile Model
     // echo $profile; // find Profile from User Model
+    //----------------------------------------------------
+    // ONT_TO_MANY
+    //----------------------------------------------------
+    // $user = User::find(1); // Assuming user with ID 1
+    // $posts = $user->posts;
 
-    $user = User::find(1); // Assuming user with ID 1
-    $posts = $user->posts;
+    // foreach ($posts as $post) {
+    //     echo $post->title;
+    //     echo $post->content;
+    //     // Perform other operations with each post
+    // }
+    //----------------------------------------------------    
+    // ONE_OF_MANY
+    //----------------------------------------------------
+    // $product = Product::find(1);
+    // $latestOrder = $product->latestOrder;
+    // if ($latestOrder) {
+    //     echo "Latest Order Number: " . $latestOrder->order_number;
+    // } else {
+    //     echo "No orders found.";
+    // }
+    //----------------------------------------------------    
+    // MANY_TO_MANY
+    //----------------------------------------------------
+    // $user = User::find(1);
 
-    foreach ($posts as $post) {
-        echo $post->title;
-        echo $post->content;
-        // Perform other operations with each post
-    }
+    // foreach ($user->roles as $role) {
+    //     echo "Role Name: " . $role->name;
+    //     // Perform any other actions or access other properties of the role
+    // }
+
+
+    // $user = User::find(1);
+
+    // foreach ($user->roles as $role) {
+    //     echo $role->pivot->role_id;
+    // }
+    // $user = User::find(1);
+    // $rolesIds = [1, 2, 3];
+    // $user->roles()->attach($rolesIds);
+    // sync() method remove prev data and add new giving data
+    // syncWithoutDetach() keep prev data if exist and add new giving data 
+    // detach() remove giving data if exist in databese
+    // return "attached";
+    // return $user->load("roles"); // fetch user with it's role 
+    //------------------------------------------------------------
+    // Morph one to one 
+    //-------------------------------------------------------------
+    $user = User::find(1);
+    $userImage = $user->media;
+    return $userImage;
+});
+
+Route::get("/morph", function () {
+    $user = User::find(1);
+    $user->media()->create([
+        'filename' => 'image.jpg',
+        'path' => '/path/to/image.jpg',
+    ]);
+
+    $product = Product::find(1);
+    $product->media()->create([
+        'filename' => 'image.jpg',
+        'path' => '/path/to/image.jpg',
+    ]);
+
+    $article = Article::find(1);
+    $article->media()->create([
+        'filename' => 'image.jpg',
+        'path' => '/path/to/image.jpg',
+    ]);
 });
 
 Route::get("/one-to-many", function () {

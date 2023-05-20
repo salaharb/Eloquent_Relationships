@@ -24,32 +24,33 @@ class UserController extends Controller
         return "User created with profile.";
     }
 
-    public function ManyToMany(){
+    public function ManyToMany()
+    {
         // create user 
         $user = new User();
-        $user->name = 'salah arbani';
-        $user->email = 'salah@example.com';
+        $user->name = 'Salah Arbani';
+        $user->email = 'Salah@example.com';
         $user->password = bcrypt('password');
         $user->save();
 
         // add roles to user
         $role1 = new Role();
-        $role1->name = 'Guest';
+        $role1->name = 'info';
         $role1->save();
-    
+
         $role2 = new Role();
-        $role2->name = 'Dev';
+        $role2->name = 'dev';
         $role2->save();
-    
+
         $user->roles()->attach([$role1->id, $role2->id]);
-    
     }
 
-    public function ManyToManyIndex(){
-        $user = User::with('roles')->find(24);
+    public function ManyToManyIndex()
+    {
+        $user = User::with('roles')->find(2);
         $roles = $user->roles;
-
+        // $role = Role::find(1);
+        // $users = $role->users;
         return view('roles.many', compact('user', 'roles'));
-        
     }
 }
