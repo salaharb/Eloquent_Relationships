@@ -27,7 +27,7 @@ class User extends Authenticatable
     {
         return $this->hasOne(Profile::class);
     }
-    public function roles() : BelongsToMany
+    public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class, 'role_user')->withTimestamps();
     }
@@ -35,6 +35,11 @@ class User extends Authenticatable
     public function media()
     {
         return $this->morphOne(Media::class, 'mediable');
+    }
+
+    public function latestImage()
+    {
+        return $this->morphOne(Media::class, 'mediable')->latestOfMany();
     }
     protected $fillable = [
         'name',

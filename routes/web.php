@@ -3,10 +3,12 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Models\Article;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Product;
 use App\Models\Profile;
 use App\Models\User;
+use App\Models\Video;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -75,9 +77,70 @@ Route::get('/', function () {
     //------------------------------------------------------------
     // Morph one to one 
     //-------------------------------------------------------------
-    $user = User::find(1);
-    $userImage = $user->media;
-    return $userImage;
+    // $user = User::find(1);
+    // $userImage = $user->media;
+    // return $userImage;
+    //------------------------------------------------------------
+    // Morph one of many 
+    //-------------------------------------------------------------
+    // $user = User::find(1); // Retrieve the user with ID 1
+    // $latestImage = $user->latestImage;
+    // return $latestImage;
+    //------------------------------------------------------------
+    // Morph one to many 
+    //-------------------------------------------------------------
+    // Create a post and associate comments with it
+    $post = Post::create([
+        'title' => 'My First Post',
+        'content' => 'This is my first post content.',
+    ]);
+
+    $comment1 = Comment::create([
+        'commentable_id' => $post->id,
+        'commentable_type' => 'App\Models\Post',
+        'content' => 'Great post!',
+    ]);
+
+    $comment2 = Comment::create([
+        'commentable_id' => $post->id,
+        'commentable_type' => 'App\Models\Post',
+        'content' => 'I found it very informative.',
+    ]);
+
+    $post->comments()->saveMany([$comment1, $comment2]);
+
+    // Create a video and associate comments with it
+    $video = Video::create([
+        'title' => 'My First Video',
+        'size' => 'https://example.com/video1',
+    ]);
+
+    $comment3 = Comment::create([
+        'commentable_id' => $video->id,
+        'commentable_type' => 'App\Models\Video',
+        'content' => 'Nice video!',
+    ]);
+
+    $comment4 = Comment::create([
+        'commentable_id' => $video->id,
+        'commentable_type' => 'App\Models\Video',
+        'content' => 'I enjoyed watching it.',
+    ]);
+
+    $video->comments()->saveMany([$comment3, $comment4]);
+    return "Morph relationship work " ;
+
+
+
+    //------------------------------------------------------------
+    // Morph one to many 
+    //-------------------------------------------------------------
+});
+
+Route::get('/test', function () {
+    $video = Post::find(1);
+    $comments = $video->comments;
+    return $comments;
 });
 
 Route::get("/morph", function () {
