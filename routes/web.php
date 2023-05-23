@@ -81,6 +81,12 @@ Route::get('/', function () {
     // $user = User::find(1);
     // $userImage = $user->media;
     // return $userImage;
+    // $product = Product::find(1);
+    // $productImage = $product->media;
+    // return $productImage;
+    // $article = Article::find(1);
+    // $articleImage = $article->media;
+    // return $articleImage;
     //------------------------------------------------------------
     // Morph one of many 
     //-------------------------------------------------------------
@@ -129,7 +135,7 @@ Route::get('/', function () {
     // ]);
 
     // $video->comments()->saveMany([$comment3, $comment4]);
-    // return "Morph relationship work ";
+    // return "Morph one to many relationship work ";
 
 
 
@@ -139,39 +145,57 @@ Route::get('/', function () {
     $post = Post::find(1);
     $tag = Tag::create(['name' => 'Laravel']);
     $post->tags()->attach($tag);
-    return "attached";
+    return "morph many to many attached";
 });
 
-Route::get('/test', function () {
-    $video = Post::find(12);
-    $comments = $video->comments;
-    return $comments;
+Route::get('/morphMTM', function () {
+    // $video = Video::find(1);
+    // $comments = $video->comments;
+    // return $comments;
     //To retrieve the tags associated with a post:
-    // $post = Post::find(1);
-    // $tags = $post->tags;
+    $post = Post::find(1);
+    $tags = $post->tags;
+    return $tags;
     //To access the posts associated with a tag:
     // $tag = Tag::find(1);
     // $posts = $tag->posts;
 });
 
-Route::get("/morph", function () {
+Route::get('/morphOTM', function () {
+    // $post = Post::find(2);
+    // $comments = $post->comments;
+    // foreach ($comments as $comment) {
+    //     echo $comment->content."<br/>";
+    // }
+
+    $video = Video::find(1);
+    $comments = $video->comments;
+    foreach($comments as $comment){
+        echo $comment->content."<br/>";
+    }
+
+});
+
+Route::get("/morphOTO", function () {
     $user = User::find(1);
     $user->media()->create([
-        'filename' => 'image.jpg',
+        'filename' => 'imageUser.jpg',
         'path' => '/path/to/image.jpg',
     ]);
+    
+    // $product = Product::find(1);
+    // $product->media()->create([
+    //     'filename' => 'imageProduct.jpg',
+    //     'path' => '/path/to/image.jpg',
+    // ]);
 
-    $product = Product::find(1);
-    $product->media()->create([
-        'filename' => 'image.jpg',
-        'path' => '/path/to/image.jpg',
-    ]);
+    // $article = Article::find(1);
+    // $article->media()->create([
+    //     'filename' => 'imageArticle.jpg',
+    //     'path' => '/path/to/image.jpg',
+    // ]);
 
-    $article = Article::find(1);
-    $article->media()->create([
-        'filename' => 'image.jpg',
-        'path' => '/path/to/image.jpg',
-    ]);
+    return 'one to one morph relation created ';
 });
 
 Route::get("/one-to-many", function () {
@@ -211,9 +235,9 @@ Route::get('/one-to-one', function () {
 
 Route::get('/user/profile', [ProfileController::class, 'show']);
 
-Route::get('/test', function () {
-    return view("posts.posts");
-});
+// Route::get('/test', function () {
+//     return view("posts.posts");
+// });
 Route::get('/create-user', [UserController::class, 'createUserWithProfile']);
 Route::get('/many-many', [UserController::class, 'ManyToMany']);
 Route::get('/many-many-index', [UserController::class, 'ManyToManyIndex']);
