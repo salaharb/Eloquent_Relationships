@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Blogging Application Exercise</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            margin-left: 20px;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Exercise: Building a Blogging Application using Laravel </h1> <span>(eloquent-relationships)</span>
+
+    <h2>Entities:</h2>
+
+    <h3>User:</h3>
+    <ul>
+        <li>Name</li>
+        <li>Email</li>
+        <li>Password</li>
+    </ul>
+
+    <h3>Post:</h3>
+    <ul>
+        <li>Title</li>
+        <li>Content</li>
+        <li>User (belongs to a User)</li>
+    </ul>
+
+    <h3>Comment:</h3>
+    <ul>
+        <li>Content</li>
+        <li>User (belongs to a User)</li>
+        <li>Post (belongs to a Post)</li>
+    </ul>
+
+    <h3>Tag:</h3>
+    <ul>
+        <li>Name</li>
+    </ul>
+
+    <h2>Relationships:</h2>
+
+    <h3>User:</h3>
+    <ul>
+        <li>Has many Posts</li>
+        <li>Has many Comments</li>
+    </ul>
+
+    <h3>Post:</h3>
+    <ul>
+        <li>Belongs to a User</li>
+        <li>Has many Comments</li>
+        <li>Has and belongs to many Tags</li>
+    </ul>
+
+    <h3>Comment:</h3>
+    <ul>
+        <li>Belongs to a User</li>
+        <li>Belongs to a Post</li>
+    </ul>
+
+    <h3>Tag:</h3>
+    <ul>
+        <li>Has and belongs to many Posts</li>
+    </ul>
+
+    <h2>Task:</h2>
+
+    <p>Your task is to create the necessary database migrations, models, and relationships in Laravel to implement the
+        entities and relationships described above.</p>
+
+    <p>Add the required fields to the migration files, create the corresponding models, and define the relationships
+        using Laravel's Eloquent ORM. Additionally, create a simple interface to demonstrate the functionality of the
+        application, such as creating new posts, adding comments, and associating tags with posts.</p>
+
+    <p>Feel free to customize and expand the application as you see fit, adding additional features or functionalities
+        as desired.</p>
+
+    <p>Good luck with your exercise!</p>
+</body>
+
+</html>

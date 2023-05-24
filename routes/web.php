@@ -142,9 +142,26 @@ Route::get('/', function () {
     //------------------------------------------------------------
     // Morph many to many 
     //-------------------------------------------------------------
-    $post = Post::find(1);
-    $tag = Tag::create(['name' => 'Laravel']);
-    $post->tags()->attach($tag);
+    // $post = Post::find(1);
+    // $tag = Tag::create(['name' => 'Laravel']);
+    // $post->tags()->attach($tag);
+    // Create a user 
+    $user = User::create(['name' => 'John Doe' , "email" => "John1@doe.com" , "password" => "12345678"]);
+
+    // Create a post
+    $post = Post::create(['title' => 'My First Post', 'content' => 'Hello, world!']);
+
+    // Create tags
+    $tag1 = Tag::create(['name' => 'Technology']);
+    $tag2 = Tag::create(['name' => 'Programming']);
+
+    // Associate the user with the post
+    $user->posts()->save($post);
+
+    // Associate tags with the post
+    $post->tags()->attach([$tag1->id, $tag2->id]);
+
+
     return "morph many to many attached";
 });
 
@@ -170,10 +187,9 @@ Route::get('/morphOTM', function () {
 
     $video = Video::find(1);
     $comments = $video->comments;
-    foreach($comments as $comment){
-        echo $comment->content."<br/>";
+    foreach ($comments as $comment) {
+        echo $comment->content . "<br/>";
     }
-
 });
 
 Route::get("/morphOTO", function () {
@@ -182,7 +198,7 @@ Route::get("/morphOTO", function () {
         'filename' => 'imageUser.jpg',
         'path' => '/path/to/image.jpg',
     ]);
-    
+
     // $product = Product::find(1);
     // $product->media()->create([
     //     'filename' => 'imageProduct.jpg',
